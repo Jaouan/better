@@ -1,0 +1,26 @@
+{
+  "name": "Better",
+  "short_name": "Better",
+  "description": "Simplement Better.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "oklch(0.98 0.01 329.88)",
+  "theme_color": "oklch(0.98 0.01 329.88)",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
