@@ -4,18 +4,19 @@ import { WAIT_TIME_IN_MS } from "@/constants";
 import { useCountsStore } from "@/stores";
 import { CountdownUntil } from "./CountdownUntil";
 
+const isButtonEnabled = (lastCountDate: number | null) =>
+  lastCountDate !== null && Date.now() > lastCountDate + WAIT_TIME_IN_MS;
+
 export const AddCountButton = () => {
   const { addCount, lastCountDate } = useCountsStore();
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [enable, setEnable] = useState(false);
+  const [enable, setEnable] = useState(() => isButtonEnabled(lastCountDate));
 
   useEffect(() => {
-    setEnable(
-      lastCountDate !== null && Date.now() > lastCountDate + WAIT_TIME_IN_MS
-    );
+    setEnable(isButtonEnabled(lastCountDate));
   }, [lastCountDate]);
 
-  if (!lastCountDate) return null;
+  if (lastCountDate === null) return null;
 
   return (
     <>

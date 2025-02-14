@@ -6,24 +6,22 @@ type CountdownUntilProps = {
 };
 
 export const CountdownUntil = ({ time, onFinish }: CountdownUntilProps) => {
-  const [countdown, setCountdown] = useState<number | null>(null);
-
+  const [secondsLeft, setSecondsLeft] = useState(0);
   useEffect(() => {
-    if (time < Date.now()) {
-      setCountdown(null);
-      return;
-    }
-    setCountdown(Math.round(Math.max(0, time - Date.now()) / 1000));
-    const interval = setInterval(() => {
-      setCountdown((prev) => (prev !== null && prev > 0 ? prev - 1 : null));
-    }, 1000);
+    const tick = () => {
+      const diff = time - Date.now();
+      if (diff <= 0) {
+        setSecondsLeft(0);
+        onFinish();
+      } else {
+        setSecondsLeft(Math.ceil(diff / 1000));
+      }
+    };
+
+    tick();
+    const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
-  }, [time]);
+  }, [time, onFinish]);
 
-  useEffect(() => {
-    if (countdown === null || countdown > 0) return;
-    onFinish();
-  }, [countdown]);
-
-  return `${countdown}s`;
+  return `${secondsLeft}s`;
 };
